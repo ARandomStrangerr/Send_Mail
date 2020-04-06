@@ -38,7 +38,8 @@ public class MainMenu extends SuperWindow {
                 emailTextField = new TextField(),
                 attachmentTextField = new TextField(),
                 attachmentFolderTextField = new TextField(),
-                subjectTextField = new TextField();
+                subjectTextField = new TextField(),
+                excelFileTextField = new TextField();
         nameTextField.setPromptText("Tên");
         emailTextField.setPromptText("e-Mail");
         attachmentTextField.setPromptText("Tên tệp tin đính kèm");
@@ -50,7 +51,8 @@ public class MainMenu extends SuperWindow {
                 addButton = new Button("Thêm"),
                 deleteButton = new Button("Xóa"),
                 changeButton = new Button("Thay đổi"),
-                choseAttachmentFolder = new Button("chọn");
+                choseAttachmentFolder = new Button("Chọn"),
+                choseExcelFile = new Button("Chọn");
         sendButton.setOnAction(action -> super.executeCommand(new SendMails(list, subjectTextField.getText().trim(),
                 bodyMessageTextArea.getText().trim(), attachmentFolderTextField.getText())));
         addButton.setOnAction(action -> super.executeCommand(new AddToTable(list, nameTextField, emailTextField,
@@ -60,6 +62,8 @@ public class MainMenu extends SuperWindow {
                 attachmentTextField, table)));
         choseAttachmentFolder.setOnAction(action -> super.executeCommand(new OpenAttachmentFolderChooser(
                 attachmentFolderTextField)));
+        choseExcelFile.setOnAction(action -> super.executeCommand(new OpenAndReadReceiverExcelFile(excelFileTextField,
+                list)));
 
         Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
@@ -69,12 +73,13 @@ public class MainMenu extends SuperWindow {
                 tableOperationButtonsWrapper = new HBox(addButton, deleteButton, changeButton),
                 buttonsWrapper = new HBox(saveButtonWrapper, region, tableOperationButtonsWrapper),
                 folderChooserWrapper = new HBox(attachmentFolderTextField, choseAttachmentFolder),
-                subjectWrapper = new HBox(subjectLabel, subjectTextField);
+                subjectWrapper = new HBox(subjectLabel, subjectTextField),
+                excelChooserWrapper = new HBox(excelFileTextField, choseExcelFile);
         super.setupPane(super.BOX_STYLE, "leftMarginWrapper", textFieldWrapper, saveButtonWrapper,
                 tableOperationButtonsWrapper, buttonsWrapper, folderChooserWrapper, subjectWrapper);
 
-        VBox mainPane = new VBox(table, textFieldWrapper, buttonsWrapper, attachmentLabel, folderChooserWrapper,
-                messageLabel, subjectWrapper, bodyMessageTextArea);
+        VBox mainPane = new VBox(excelChooserWrapper, table, textFieldWrapper, buttonsWrapper, attachmentLabel,
+                folderChooserWrapper, messageLabel, subjectWrapper, bodyMessageTextArea);
         super.setupPane(super.BOX_STYLE, "background", mainPane);
 
         return mainPane;
