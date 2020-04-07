@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class RecieverList {
     private final SimpleStringProperty name, email, attachment;
 
-    public RecieverList(String name, String email, String attachment){
+    public RecieverList(String name, String email, String attachment) {
         this.name = new SimpleStringProperty(name);
         this.email = new SimpleStringProperty(email);
         this.attachment = new SimpleStringProperty(attachment);
@@ -15,23 +15,23 @@ public class RecieverList {
         return name.get();
     }
 
-    public SimpleStringProperty nameProperty() {
-        return name;
-    }
-
     public String getEmail() {
         return email.get();
-    }
-
-    public SimpleStringProperty emailProperty() {
-        return email;
     }
 
     public String getAttachment() {
         return attachment.get();
     }
 
-    public SimpleStringProperty attachmentProperty() {
-        return attachment;
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public void setEmail(String email) {
+        this.email.set(email);
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment.set(attachment);
     }
 }

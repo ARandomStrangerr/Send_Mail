@@ -1,0 +1,26 @@
+.normal{
+    -fx-font-family: "Courier";
+    -fx-font-size: 14px;
+    -fx-selection-bar: #e6e8ff;
+    -fx-selection-bar-non-focused: #e6e8ff;
+}
+.normal .table-row-cell{
+    -fx-cell-size: 40px;
+}
+.normal .table-column{
+    -fx-alignment: center-left;
+}
+.normal .column-header{
+    -fx-background-color: #fafaf4;
+    -fx-pref-height: 40px;
+}
+.normal .text-field{
+    -fx-background-color: transparent;
+    -fx-border-color: #bfbfbf;
+    -fx-border-insets: 0px;
+}
+
+.normal:focused  {
+    -fx-border-color: #bfbfbf;
+    -fx-background-insets: 0 0 0 0;
+}

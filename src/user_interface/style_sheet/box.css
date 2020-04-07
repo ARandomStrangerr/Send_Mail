@@ -11,6 +11,8 @@
     -fx-spacing: 10;
 }
 .background{
+    -fx-background-color: #fafafa;
     -fx-padding: 25;
     -fx-spacing: 10;
+    -fx-pref-width: 900;
 }

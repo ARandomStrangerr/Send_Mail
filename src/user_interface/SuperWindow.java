@@ -9,7 +9,11 @@ import user_interface.command.Command;
 abstract public class SuperWindow {
     private final Stage stage;
     private final String windowName;
-    protected final String BOX_STYLE = "/user_interface/style_sheet/box.css";
+    protected final String BOX_STYLE = "/user_interface/style_sheet/box.css",
+            BUTTON_STYLE = "/user_interface/style_sheet/button.css",
+            LABEL_STYLE = "/user_interface/style_sheet/label.css",
+            TEXT_FIELD_STYLE = "/user_interface/style_sheet/text_field.css",
+            TABLE_STYLE = "/user_interface/style_sheet/table.css";
 
     public SuperWindow(Stage stage, String windowName) {
         this.stage = stage;
@@ -27,14 +31,14 @@ abstract public class SuperWindow {
     }
 
     protected void setupPane(String path, String styleClass, Pane... panes) {
-        for (Pane pane : panes){
+        for (Pane pane : panes) {
             pane.getStylesheets().add(path);
             pane.getStyleClass().add(styleClass);
         }
     }
 
-    protected void setupControl(String path, String styleClass, Control... controls){
-        for (Control control : controls){
+    protected void setupControl(String path, String styleClass, Control... controls) {
+        for (Control control : controls) {
             control.getStylesheets().add(path);
             control.getStyleClass().add(styleClass);
         }
