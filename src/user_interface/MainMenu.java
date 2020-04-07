@@ -17,7 +17,7 @@ public class MainMenu extends SuperWindow {
 
     @Override
     protected Pane setupPane() {
-        ObservableList<RecieverList> list = FXCollections.observableArrayList(new RecieverList("T","bill","gmail.pdf"));
+        ObservableList<RecieverList> list = FXCollections.observableArrayList(new RecieverList("T", "bill", "gmail.pdf"));
 
         TableView<RecieverList> table = new TableView<>();
         table.setEditable(true);
@@ -47,66 +47,49 @@ public class MainMenu extends SuperWindow {
                 tableLabel = new Label("Danh sách người nhận");
         super.setupControl(super.LABEL_STYLE, "normal", attachmentLabel, messageLabel, subjectLabel,
                 tableLabel);
-
-        TextField nameTextField = new TextField(),
-                emailTextField = new TextField(),
-                attachmentTextField = new TextField(),
-                attachmentFolderTextField = new TextField(),
-                subjectTextField = new TextField(),
-                excelFileTextField = new TextField();
-        nameTextField.setPromptText("Tên");
-        emailTextField.setPromptText("e-Mail");
-        attachmentTextField.setPromptText("Tên tệp tin đính kèm");
-        super.setupControl(super.TEXT_FIELD_STYLE, "normal", nameTextField, emailTextField,
-                attachmentTextField, attachmentFolderTextField, subjectTextField, excelFileTextField);
-        HBox.setHgrow(subjectTextField, Priority.ALWAYS);
-        HBox.setHgrow(attachmentFolderTextField, Priority.ALWAYS);
-        HBox.setHgrow(excelFileTextField, Priority.ALWAYS);
+        super.setupControl(super.LABEL_STYLE, "title", attachmentLabel, tableLabel, messageLabel);
 
         TextArea bodyMessageTextArea = new TextArea();
         bodyMessageTextArea.setPromptText("Nội dung");
 
+        TextField attachmentFolderTextField = new TextField(),
+                subjectTextField = new TextField();
+        super.setupControl(super.TEXT_FIELD_STYLE, "normal", attachmentFolderTextField, subjectTextField,
+                bodyMessageTextArea);
+        HBox.setHgrow(subjectTextField, Priority.ALWAYS);
+        HBox.setHgrow(attachmentFolderTextField, Priority.ALWAYS);
+
         Button sendButton = new Button("Gửi"),
                 addButton = new Button("Thêm"),
                 deleteButton = new Button("Xóa"),
-                changeButton = new Button("Thay đổi"),
-                choseAttachmentFolder = new Button("Chọn"),
-                choseExcelFile = new Button("Chọn");
+                choseAttachmentFolderButton = new Button("Chọn"),
+                helpButton = new Button("?");
         sendButton.setOnAction(action -> super.executeCommand(new SendMails(list, subjectTextField.getText().trim(),
                 bodyMessageTextArea.getText().trim(), attachmentFolderTextField.getText())));
-        addButton.setOnAction(action -> super.executeCommand(new AddToTable(list, nameTextField, emailTextField,
-                attachmentTextField)));
         deleteButton.setOnAction(action -> super.executeCommand(new DeleteEntryOfTable(table)));
-        changeButton.setOnAction(action -> super.executeCommand(new ChangeEntryOfTable(nameTextField, emailTextField,
-                attachmentTextField, table)));
-        choseAttachmentFolder.setOnAction(action -> super.executeCommand(new OpenAttachmentFolderChooser(
+        choseAttachmentFolderButton.setOnAction(action -> super.executeCommand(new OpenAttachmentFolderChooser(
                 attachmentFolderTextField)));
-        choseExcelFile.setOnAction(action -> super.executeCommand(new OpenAndReadReceiverExcelFile(excelFileTextField,
-                list)));
-        super.setupControl(super.BUTTON_STYLE, "normal", sendButton, addButton, deleteButton, changeButton,
-                choseAttachmentFolder, choseExcelFile);
+        super.setupControl(super.BUTTON_STYLE, "normal", sendButton, addButton, deleteButton,
+                choseAttachmentFolderButton, helpButton);
 
-        Region betweenTableLabelAndTableOperationButtons = new Region();
+        Region betweenTableLabelAndTableOperationButtons = new Region(),
+                beforeSendButton = new Region();
         HBox.setHgrow(betweenTableLabelAndTableOperationButtons, Priority.ALWAYS);
+        HBox.setHgrow(beforeSendButton, Priority.ALWAYS);
 
-        HBox textFieldWrapper = new HBox(nameTextField, emailTextField, attachmentTextField),
-                tableOperationButtonsWrapper = new HBox(addButton, deleteButton, changeButton),
-                tableLabelAndOperationWrapper = new HBox(tableLabel, betweenTableLabelAndTableOperationButtons,
-                        tableOperationButtonsWrapper),
-                sendButtonWrapper = new HBox(sendButton),
-                buttonsWrapper = new HBox(sendButtonWrapper),
-                folderChooserWrapper = new HBox(attachmentFolderTextField, choseAttachmentFolder),
-                subjectWrapper = new HBox(subjectLabel, subjectTextField),
-                excelChooserWrapper = new HBox(excelFileTextField, choseExcelFile);
-        super.setupPane(super.BOX_STYLE, "leftMarginWrapper", textFieldWrapper, sendButtonWrapper,
-                tableLabelAndOperationWrapper, buttonsWrapper, folderChooserWrapper, subjectWrapper,
-                excelChooserWrapper);
+        HBox tableLabelAndOperationWrapper = new HBox(tableLabel, betweenTableLabelAndTableOperationButtons,
+                addButton, deleteButton),
+                helpAndSendButtonWrapper = new HBox(helpButton, beforeSendButton, sendButton),
+                folderChooserWrapper = new HBox(attachmentFolderTextField, choseAttachmentFolderButton),
+                subjectWrapper = new HBox(subjectLabel, subjectTextField);
+        super.setupPane(super.BOX_STYLE, "leftMarginWrapper", helpAndSendButtonWrapper,
+                tableLabelAndOperationWrapper, folderChooserWrapper, subjectWrapper);
 
-        VBox mainPane = new VBox(excelChooserWrapper, tableLabelAndOperationWrapper, table, textFieldWrapper,
-                buttonsWrapper, attachmentLabel, folderChooserWrapper, messageLabel, subjectWrapper,
-                bodyMessageTextArea);
+        VBox mainPane = new VBox(tableLabelAndOperationWrapper, table, attachmentLabel, folderChooserWrapper,
+                messageLabel, subjectWrapper, bodyMessageTextArea, helpAndSendButtonWrapper);
         super.setupPane(super.BOX_STYLE, "background", mainPane);
 
+        helpButton.setOnAction(action -> super.executeCommand(new OpenHelpWindow(super.stage, mainPane)));
         return mainPane;
     }
 }

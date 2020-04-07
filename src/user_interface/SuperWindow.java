@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import user_interface.command.Command;
 
 abstract public class SuperWindow {
-    private final Stage stage;
-    private final String windowName;
+    protected final Stage stage;
+    protected final String windowName;
     protected final String BOX_STYLE = "/user_interface/style_sheet/box.css",
             BUTTON_STYLE = "/user_interface/style_sheet/button.css",
             LABEL_STYLE = "/user_interface/style_sheet/label.css",
