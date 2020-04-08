@@ -3,6 +3,7 @@
     -fx-font-size: 14px;
     -fx-selection-bar: #e6e8ff;
     -fx-selection-bar-non-focused: #e6e8ff;
+    -fx-table-cell-border-color: #2d70b3;
 }
 .normal .table-row-cell{
     -fx-cell-size: 40px;
