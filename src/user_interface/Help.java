@@ -24,7 +24,7 @@ public class Help extends SuperWindow {
 
     @Override
     protected Pane setupPane() {
-        String message = "Hướng dẫn sử dụng phần mềm gửi hóa đơn:\n" +
+        String message = "Hướng dẫn sử dụng phần mềm gửi e-Mail tự động:\n" +
                 "+ Bước 1: khởi tạo danh sách người gửi.\n" +
                 "Danh sách người gửi có thể được khởi tạo bằng cách thêm từng người hoặc đọc dữ liệu từ tệp tin \n" +
                 "excel (*.xls hoặc *.xlsx) dưới định dạng: \n" +
