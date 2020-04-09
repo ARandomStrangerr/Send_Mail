@@ -59,8 +59,15 @@ public class MainMenu extends SuperWindow {
         HBox.setHgrow(subjectTextField, Priority.ALWAYS);
         HBox.setHgrow(attachmentFolderTextField, Priority.ALWAYS);
 
+        MenuItem addSinglePersonOption = new MenuItem("Thêm một người"),
+                addFromFileOption = new MenuItem("Thêm từ file");
+        addSinglePersonOption.setOnAction(event -> list.add(new RecieverList("", "", "")));
+        addFromFileOption.setOnAction(event -> super.executeCommand(new OpenAndReadReceiverExcelFile(list)));
+
+        MenuButton addOption = new MenuButton("Thêm");
+        addOption.getItems().addAll(addSinglePersonOption, addFromFileOption);
+
         Button sendButton = new Button("Gửi"),
-                addButton = new Button("Thêm"),
                 deleteButton = new Button("Xóa"),
                 choseAttachmentFolderButton = new Button("Chọn"),
                 helpButton = new Button("?");
@@ -69,7 +76,7 @@ public class MainMenu extends SuperWindow {
         deleteButton.setOnAction(action -> super.executeCommand(new DeleteEntryOfTable(table)));
         choseAttachmentFolderButton.setOnAction(action -> super.executeCommand(new OpenAttachmentFolderChooser(
                 attachmentFolderTextField)));
-        super.setupControl(super.BUTTON_STYLE, "normal", sendButton, addButton, deleteButton,
+        super.setupControl(super.BUTTON_STYLE, "normal", sendButton, addOption, deleteButton,
                 choseAttachmentFolderButton, helpButton);
 
         Region betweenTableLabelAndTableOperationButtons = new Region(),
@@ -78,7 +85,7 @@ public class MainMenu extends SuperWindow {
         HBox.setHgrow(beforeSendButton, Priority.ALWAYS);
 
         HBox tableLabelAndOperationWrapper = new HBox(tableLabel, betweenTableLabelAndTableOperationButtons,
-                addButton, deleteButton),
+                addOption, deleteButton),
                 helpAndSendButtonWrapper = new HBox(helpButton, beforeSendButton, sendButton),
                 folderChooserWrapper = new HBox(attachmentFolderTextField, choseAttachmentFolderButton),
                 subjectWrapper = new HBox(subjectLabel, subjectTextField);

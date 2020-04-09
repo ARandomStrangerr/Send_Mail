@@ -10,20 +10,17 @@ import user_interface.table_datatype.RecieverList;
 import java.io.IOException;
 
 public class OpenAndReadReceiverExcelFile implements Command {
-    private TextField textField;
     private ObservableList<RecieverList> list;
 
-    public OpenAndReadReceiverExcelFile(TextField textField, ObservableList<RecieverList> list) {
-        this.textField = textField;
+    public OpenAndReadReceiverExcelFile(ObservableList<RecieverList> list) {
         this.list = list;
     }
 
     @Override
     public void execute() {
         FileChooser fileChooser = new FileChooser();
-        textField.setText(fileChooser.showOpenDialog(new Stage()).getAbsolutePath());
         try {
-            for (String line : new ExcelOperation().read(textField.getText())) {
+            for (String line : new ExcelOperation().read(fileChooser.showOpenDialog(new Stage()).getAbsolutePath())) {
                 String[] data = line.split(":");
                 list.add(new RecieverList(data[0].trim(), data[1].trim(), data[2].trim()));
             }
