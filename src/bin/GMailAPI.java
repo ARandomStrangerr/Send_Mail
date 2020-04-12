@@ -97,14 +97,15 @@ public class GMailAPI {
                     .append("Content-Type: multipart/mixed; boundary=\"foo_bar_baz\"\n")
                     .append("MIME-Version: 1.0\n")
                     .append("to: ").append(receiver.getEmail()).append("\n")
-                    .append("subject:").append(subject).append("\n")
+                    .append("subject: =?UTF-8?B?").append(Base64.getEncoder().encodeToString(subject.getBytes()))
+                    .append("?=\n")
                     .append("\n")
                     .append(body)
                     .append("\n");
             if (!receiver.getAttachment().equals("")) {
                 entireMessage.append("--foo_bar_baz\n")
                         .append("Content-Type:").append(contendType.get(receiver.getAttachment()
-                            .substring(receiver.getAttachment().indexOf(".")))).append("\n")
+                        .substring(receiver.getAttachment().indexOf(".")))).append("\n")
                         .append("MIME-Version: 1.0\n")
                         .append("Content-Transfer-Encoding: base64\n")
                         .append("Content-Disposition: attachment; filename=").append("\"")
