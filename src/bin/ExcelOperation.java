@@ -1,6 +1,5 @@
 package bin;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
@@ -21,6 +20,7 @@ public class ExcelOperation implements FileOperation {
                     ":" + formatter.formatCellValue(row.getCell(2));
             data.add(sb);
         }
+        workbook.close();
         return data;
     }
 

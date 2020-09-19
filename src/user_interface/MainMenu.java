@@ -17,7 +17,7 @@ public class MainMenu extends SuperWindow {
 
     @Override
     protected Pane setupPane() {
-        ObservableList<RecieverList> list = FXCollections.observableArrayList(new RecieverList("T", "bill", "gmail.pdf"));
+        ObservableList<RecieverList> list = FXCollections.observableArrayList();
 
         TableView<RecieverList> table = new TableView<>();
         table.setEditable(true);

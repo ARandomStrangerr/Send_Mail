@@ -120,13 +120,15 @@ public class GMailAPI {
                     .append("}");
 
             //TEST
-            HttpURLConnection con = (HttpURLConnection) new URL(address).openConnection();
-            con.setRequestMethod("POST");
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setRequestProperty("Content-Type", "message/rfc822");
-            con.getOutputStream().write(entireMessage.toString().getBytes());
-            getInputString(con.getInputStream());
+            try {
+                HttpURLConnection con = (HttpURLConnection) new URL(address).openConnection();
+                con.setRequestMethod("POST");
+                con.setUseCaches(false);
+                con.setDoOutput(true);
+                con.setRequestProperty("Content-Type", "message/rfc822");
+                con.getOutputStream().write(entireMessage.toString().getBytes());
+                getInputString(con.getInputStream());
+            } catch (Exception ignore){}
             //END TEST
         }
     }

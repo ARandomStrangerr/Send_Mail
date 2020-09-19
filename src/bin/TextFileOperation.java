@@ -14,6 +14,7 @@ public class TextFileOperation implements FileOperation {
         for (String line = br.readLine(); line != null; line = br.readLine()) {
             lines.add(line);
         }
+        br.close();
         return lines;
     }
 
