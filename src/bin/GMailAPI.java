@@ -21,46 +21,58 @@ public class GMailAPI {
         contendType = new LinkedHashMap<>();
     }
 
-    public void obtainToken() throws URISyntaxException, IOException {
-        //Step 1: send request to Google's Auth 2.0 server
-        String address = "https://accounts.google.com/o/oauth2/v2/auth?"
+    /**
+     * Step 1: send request to Google's Auth 2.0 server
+     * @return address to open in browser
+     */
+    public String getRequestURI(){
+        return "https://accounts.google.com/o/oauth2/v2/auth?"
                 + generateParameters("client_id", "redirect_uri", "response_type", "scope");
+    }
 
-        //Open above address in a browser
-        Desktop.getDesktop().browse(new URI(address));
-
-        //Get the Auth 2.0 server response
+    /**
+     * wait for response of the Google's Auth 2.0 Server after granting permission
+     * @return response of the server
+     * @throws IOException if an I/O error occurs when opening the socket.
+     */
+    public String listenForResponse()throws IOException{
         ServerSocket serverSocket = new ServerSocket(4444);
         Socket socket = serverSocket.accept();
         String response = getInputString(socket.getInputStream());
         socket.close();
         serverSocket.close();
+        return response;
+    }
+
+    public void obtainToken() throws URISyntaxException, IOException {
+
+        //Get the Auth 2.0 server response
 
         //Handle the Auth 2.0 server response / get authorization code
-        if (!response.contains("access_denied")) {
-            this.credential.put("code", response.substring(response.indexOf("=") + 1, response.indexOf("&")));
-        } else {
-            return;
-        }
-
-        //Step 2: exchange authorization code for access / refresh token
-        address = "https://oauth2.googleapis.com/token";
-        String param = generateParameters("code", "client_id", "client_secret", "redirect_uri", "grant_type");
-
-        //Send authorization code to Google API and get Access/Refresh Token
-        response = connectToURI(address, param.getBytes());
-
-        //extract Access/Refresh Token
-        String[] extractedParameter = response.replace("\\u007D", "")
-                .replaceAll("\\u007B", "")
-                .replaceAll("\"", "")
-                .split(",");
-        for (String parameter : extractedParameter) {
-            if (parameter.contains("access_token") || parameter.contains("refresh_token")) {
-                String[] parameterArr = parameter.split(":");
-                credential.put(parameterArr[0].trim(), parameterArr[1].trim());
-            }
-        }
+//        if (!response.contains("access_denied")) {
+//            this.credential.put("code", response.substring(response.indexOf("=") + 1, response.indexOf("&")));
+//        } else {
+//            return;
+//        }
+//
+//        //Step 2: exchange authorization code for access / refresh token
+//        address = "https://oauth2.googleapis.com/token";
+//        String param = generateParameters("code", "client_id", "client_secret", "redirect_uri", "grant_type");
+//
+//        //Send authorization code to Google API and get Access/Refresh Token
+//        response = connectToURI(address, param.getBytes());
+//
+//        //extract Access/Refresh Token
+//        String[] extractedParameter = response.replace("\\u007D", "")
+//                .replaceAll("\\u007B", "")
+//                .replaceAll("\"", "")
+//                .split(",");
+//        for (String parameter : extractedParameter) {
+//            if (parameter.contains("access_token") || parameter.contains("refresh_token")) {
+//                String[] parameterArr = parameter.split(":");
+//                credential.put(parameterArr[0].trim(), parameterArr[1].trim());
+//            }
+//        }
     }
 
     public void sendEmail(ObservableList<RecieverList> receiverLists, String attachmentFolder) throws IOException {
