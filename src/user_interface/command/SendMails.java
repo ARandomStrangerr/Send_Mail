@@ -68,6 +68,7 @@ public class SendMails implements Command {
                     response = gmailAPI.listenForResponse();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return;
                 }
                 Platform.runLater(new Runnable() {
                     @Override
@@ -75,6 +76,11 @@ public class SendMails implements Command {
                         browserStage.close();
                     }
                 });
+                if (!response.contains("access_denied")) {
+                    this.credential.put("code", response.substring(response.indexOf("=") + 1, response.indexOf("&")));
+                } else {
+                    return;
+                }
             }
         };
         Thread listenerThread = new Thread(listener);

@@ -49,11 +49,7 @@ public class GMailAPI {
         //Get the Auth 2.0 server response
 
         //Handle the Auth 2.0 server response / get authorization code
-//        if (!response.contains("access_denied")) {
-//            this.credential.put("code", response.substring(response.indexOf("=") + 1, response.indexOf("&")));
-//        } else {
-//            return;
-//        }
+//
 //
 //        //Step 2: exchange authorization code for access / refresh token
 //        address = "https://oauth2.googleapis.com/token";
