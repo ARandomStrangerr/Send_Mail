@@ -1,12 +1,11 @@
 package bin;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TextFileOperation implements FileOperation {
+    private BufferedWriter bw;
     @Override
     public List<String> read(String path) throws IOException {
         LinkedList<String> lines = new LinkedList<>();
@@ -19,7 +18,19 @@ public class TextFileOperation implements FileOperation {
     }
 
     @Override
-    public void write(String path) {
+    public void write(String path) { }
 
+    public void createLogFile()throws IOException{
+        bw = new BufferedWriter(new FileWriter("log.txt",true));
+    }
+
+    public void append(String line){
+        try {
+            bw.write(line);
+            bw.flush();
+        } catch (IOException ignore){}
+    }
+    public void closeLogFile()throws IOException{
+        bw.close();
     }
 }

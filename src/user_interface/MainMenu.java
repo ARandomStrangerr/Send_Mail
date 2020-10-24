@@ -8,7 +8,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import user_interface.command.*;
-import user_interface.table_datatype.RecieverList;
+import user_interface.table_datatype.ReceiverList;
 
 public class MainMenu extends SuperWindow {
     public MainMenu(Stage stage) {
@@ -17,15 +17,15 @@ public class MainMenu extends SuperWindow {
 
     @Override
     protected Pane setupPane() {
-        ObservableList<RecieverList> list = FXCollections.observableArrayList();
+        ObservableList<ReceiverList> list = FXCollections.observableArrayList();
 
-        TableView<RecieverList> table = new TableView<>();
+        TableView<ReceiverList> table = new TableView<>();
         table.setEditable(true);
         table.setItems(list);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         super.setupControl(super.TABLE_STYLE, "normal", table);
 
-        TableColumn<RecieverList, String> nameColumn = new TableColumn<>("Tên"),
+        TableColumn<ReceiverList, String> nameColumn = new TableColumn<>("Tên"),
                 emailColumn = new TableColumn<>("e-Mail"),
                 attachmentColumn = new TableColumn<>("Đính kèm");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -61,7 +61,7 @@ public class MainMenu extends SuperWindow {
 
         MenuItem addSinglePersonOption = new MenuItem("Thêm một người"),
                 addFromFileOption = new MenuItem("Thêm từ file");
-        addSinglePersonOption.setOnAction(event -> list.add(new RecieverList("", "", "")));
+        addSinglePersonOption.setOnAction(event -> list.add(new ReceiverList("", "", "")));
         addFromFileOption.setOnAction(event -> super.executeCommand(new OpenAndReadReceiverExcelFile(list)));
 
         MenuButton addOption = new MenuButton("Thêm");
@@ -72,7 +72,7 @@ public class MainMenu extends SuperWindow {
                 choseAttachmentFolderButton = new Button("Chọn"),
                 helpButton = new Button("?");
         sendButton.setOnAction(action -> super.executeCommand(new SendMails(list, subjectTextField.getText().trim(),
-                bodyMessageTextArea.getText().trim(), attachmentFolderTextField.getText())));
+                bodyMessageTextArea.getText().trim(), attachmentFolderTextField.getText(), stage)));
         deleteButton.setOnAction(action -> super.executeCommand(new DeleteEntryOfTable(table)));
         choseAttachmentFolderButton.setOnAction(action -> super.executeCommand(new OpenAttachmentFolderChooser(
                 attachmentFolderTextField)));

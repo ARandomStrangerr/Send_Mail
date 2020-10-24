@@ -16,7 +16,6 @@
       <element id="archive" name="SendMail.jar">
         <element id="module-output" name="SendMail" />
       </element>
-      <element id="library" level="project" name="poi-1.4.2" />
     </root>
   </artifact>
 </component>

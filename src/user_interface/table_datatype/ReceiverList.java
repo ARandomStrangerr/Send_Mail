@@ -2,10 +2,10 @@ package user_interface.table_datatype;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class RecieverList {
+public class ReceiverList {
     private final SimpleStringProperty name, email, attachment;
 
-    public RecieverList(String name, String email, String attachment) {
+    public ReceiverList(String name, String email, String attachment) {
         this.name = new SimpleStringProperty(name);
         this.email = new SimpleStringProperty(email);
         this.attachment = new SimpleStringProperty(attachment);

@@ -2,15 +2,15 @@ package user_interface.command;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
-import user_interface.table_datatype.RecieverList;
+import user_interface.table_datatype.ReceiverList;
 
 import java.util.regex.Pattern;
 
 public class AddToTable implements Command {
-    private ObservableList<RecieverList> data;
+    private ObservableList<ReceiverList> data;
     private TextField name, email, attachment;
 
-    public AddToTable(ObservableList<RecieverList> data, TextField name, TextField email, TextField attachment) {
+    public AddToTable(ObservableList<ReceiverList> data, TextField name, TextField email, TextField attachment) {
         this.data = data;
         this.name = name;
         this.email = email;
@@ -24,7 +24,7 @@ public class AddToTable implements Command {
                 attachmentValue = attachment.getText().trim();
         Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         if (pattern.matcher(emailValue).matches()) {
-            data.add(new RecieverList(nameValue, emailValue, attachmentValue));
+            data.add(new ReceiverList(nameValue, emailValue, attachmentValue));
             name.clear();
             email.clear();
             attachment.clear();
