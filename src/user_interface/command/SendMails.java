@@ -86,10 +86,11 @@ public class SendMails implements Command {
                     errorLog.append(receiver.getEmail() + " : " + e.getMessage());
                 }
             }
+            Platform.runLater(holdStage::close);
             if (list.size() != 0) {
                 Platform.runLater(() -> new UnableToSendTable(new Stage(), "Lỗi", list).openWindow());
             } else {
-                Platform.runLater(() -> new ErrorWarning(new Stage(), "Hoàn Thành"));
+                Platform.runLater(() -> new ErrorWarning(new Stage(), "Hoàn Thành").openWindow());
             }
         };
         Thread listenerThread = new Thread(listener);

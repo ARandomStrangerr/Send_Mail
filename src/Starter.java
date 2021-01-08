@@ -19,7 +19,7 @@ public class Starter extends Application {
      *                     primary stages and will not be embedded in the browser.
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         new MainMenu(primaryStage).openWindow();
     }
 

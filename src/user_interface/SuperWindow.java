@@ -21,7 +21,7 @@ abstract public class SuperWindow {
     }
 
     public void openWindow() {
-        stage.setScene(new Scene(setupPane()));
+        stage.setScene(new Scene(setupPane(),1000,500));
         stage.setTitle(windowName);
         stage.show();
     }
@@ -45,5 +45,4 @@ abstract public class SuperWindow {
     }
 
     abstract protected Pane setupPane();
-
 }

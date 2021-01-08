@@ -1,7 +1,10 @@
 package bin;
 
 import java.io.*;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
 import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -79,11 +82,11 @@ public class GMailAPI {
         try {
             socket.close();
             serverSocket.close();
-        } catch (IOException ignore) {
+        } catch (Exception ignore) {
         }
     }
 
-    public void sendEmail(String receiver, String fileName) throws FileNotFoundException, IOException {
+    public void sendEmail(String receiver, String fileName) throws IOException {
         String address = "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send?uploadType=multipart&" + generateParameters("access_token"),
                 message = constructSubject(receiver) + body;
         if (!fileName.isEmpty()) {
@@ -94,7 +97,7 @@ public class GMailAPI {
         connectToURI(address, message.getBytes(), true);
     }
 
-    private String encodeFileToBase64(String filePath) throws FileNotFoundException, IOException {
+    private String encodeFileToBase64(String filePath) throws IOException {
         File file = new File(filePath);
         byte[] byteArr = new byte[(int) file.length()];
         FileInputStream fis = new FileInputStream(file);
