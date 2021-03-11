@@ -44,7 +44,10 @@ public class SendMails implements Command {
         Stage browserStage = new Stage();
         new Browser(browserStage, gmailAPI.getRequestURI()).openWindow();
         browserStage.setOnCloseRequest(event -> {
-            gmailAPI.closeSocket();
+            try {
+                gmailAPI.closeSocket();
+            } catch (Exception ignore) {
+            }
             browserStage.close();
         });
 
@@ -96,5 +99,4 @@ public class SendMails implements Command {
         Thread listenerThread = new Thread(listener);
         listenerThread.start();
     }
-
 }
